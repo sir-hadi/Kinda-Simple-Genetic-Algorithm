@@ -21,8 +21,8 @@ def initCromosom(l = genLength*2):
 def decodeCromosom(c):
     cLength = int(len(c))
     cLengthHalf = int(len(c)/2)
-    x1 = lL1 + (((uL1 - lL1) / genLength) * sum(c[0:cLengthHalf]))
-    x2 = lL2 + (((uL2 - lL2) / genLength) * sum(c[cLengthHalf:cLength]))
+    x1 = lL1 + ((uL1 - lL1) / genLength) * sum(c[0:cLengthHalf])
+    x2 = lL2 + ((uL2 - lL2) / genLength) * sum(c[cLengthHalf:cLength])
     return x1,x2
 
 # Perhitungan fitness

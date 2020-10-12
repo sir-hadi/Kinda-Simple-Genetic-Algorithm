@@ -104,12 +104,12 @@ def main():
     while not found:
 
         # sort the population in increasing order of fitness score
-        population = sorted(population, key=lambda x: x.fitness)
+        population = sorted(population, key=lambda x: x.calculateFitness)
 
         # if the individual having lowest fitness score ie.
         # 0 then we know that we have reached to the target
         # and break the loop
-        if population[0].fitness <= 0:
+        if population[0].calculateFitness <= 0:
             found = True
             break
 
@@ -135,7 +135,7 @@ def main():
         print("Generation: {}\tString: {}\tFitness: {}". \
               format(generation,
                      "".join(population[0].chromosome),
-                     population[0].fitness))
+                     population[0].calculateFitness))
 
         generation += 1
 
