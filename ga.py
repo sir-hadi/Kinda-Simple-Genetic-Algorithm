@@ -2,7 +2,7 @@ import random
 import math
 from prettytable import PrettyTable
 
-# Jumlah populasi yang akan di gunakan
+
 populationSize = 50
 
 # lL berarti Lower Limit atau batas bawah, sedangkan uL berarti batas atas
@@ -16,21 +16,19 @@ genLength = 6
 chromosomeLength = genLength * 2
 
 crossoverProbability = 0.64
-mutationProbability = 0.1  # 0.1 sheem to be the best for mutation by looking at the result
+mutationProbability = 0.1
 
 fitnessThreshold = 4.060769704837473
 
 tournamentSize = 5
 
 
-# Inisialisasi kromosom
 def initChromosome(length=chromosomeLength):
     chromosome = []
     for _ in range(length): chromosome.append(random.randint(0, 1))
     return chromosome
 
 
-# Dekode kromosom
 def decodeChromosome(chromosome):
 
     cLength = int(len(chromosome))
@@ -49,7 +47,6 @@ def decodeChromosome(chromosome):
     return x1, x2
 
 
-# Perhitungan fitness
 def calculateFitness(chromosome):
     x1, x2 = decodeChromosome(chromosome)
     return 2 ** -(math.cos(x1) * math.sin(x2) - (x1 / (x2 ** 2 + 1)))
@@ -62,7 +59,6 @@ def firstPopulation(popSize=populationSize):
     return population
 
 
-# Pemilihan orangtua
 def parentTournamentSelection(population, tSize=tournamentSize):
     winner = None
     randomNum = random.sample(range(0, len(population) - 1), tSize)
@@ -105,7 +101,6 @@ def crossoverThreePoint(chromosome1, chromosome2, probability=crossoverProbabili
     return chromosome1, chromosome2
 
 
-# Mutasi
 def mutation(chromosome, probability=mutationProbability):
     randomProbability = random.random()
     if (randomProbability <= probability):
@@ -113,7 +108,6 @@ def mutation(chromosome, probability=mutationProbability):
         chromosome[randomIndex] = 1 if (chromosome[randomIndex] == 0) else 0
 
 
-# Pergantian Generasi
 def changeGeneration(currentPopulation):
     newPopulation = []
 
