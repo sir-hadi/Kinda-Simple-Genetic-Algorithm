@@ -1,11 +1,9 @@
 import random
 import math
-from prettytable import PrettyTable
 
+# ++++++++++++++ PARAMETER PROGRAM ++++++++++++++
+populationSize = 40
 
-populationSize = 50
-
-# lL berarti Lower Limit atau batas bawah, sedangkan uL berarti batas atas
 lL1 = -1
 uL1 = 2
 lL2 = -1
@@ -16,12 +14,13 @@ genLength = 6
 chromosomeLength = genLength * 2
 
 crossoverProbability = 0.64
-mutationProbability = 0.1
+mutationProbability = 0.2
 
 fitnessThreshold = 4.060769704837473
 
 tournamentSize = 5
 
+# +++++++++++ END OF PARAMETER PROGRAM +++++++++++
 
 def initChromosome(length=chromosomeLength):
     chromosome = []
@@ -49,7 +48,7 @@ def decodeChromosome(chromosome):
 
 def calculateFitness(chromosome):
     x1, x2 = decodeChromosome(chromosome)
-    return 2 ** -(math.cos(x1) * math.sin(x2) - (x1 / (x2 ** 2 + 1)))
+    return 2 ** -(math.cos(x1) * math.sin(x2) - (x1 / ((x2 ** 2) + 1)))
 
 
 def firstPopulation(popSize=populationSize):
@@ -147,32 +146,25 @@ def elitismSecondBest(population):
     return best2nd
 
 
-def outputPopulation(x):
-    t = PrettyTable(['Chromosome', 'Fitness'])
-    for i in range(len(x)):
-        tempChromosome = "".join(str(j) for j in x[i])
-        tempFitness = calculateFitness(x[i])
-        t.add_row([tempChromosome, tempFitness])
-    print(t)
-
 # +++++++++++++++++ MAIN PROGRAM +++++++++++++++++
 bestFromRun = []
 x = firstPopulation()
 print('gen', 0, "--- Cromosome :", "".join(str(j) for j in elitismFirstBest(x)),
       "--- Fitness :", calculateFitness(elitismFirstBest(x)),
       "--- x1,x2 :", decodeChromosome(elitismFirstBest(x)))
+bestFromRun.append(elitismFirstBest(x))
 i = 0
 
 while calculateFitness(elitismFirstBest(x)) < fitnessThreshold:
     i += 1
     x = changeGeneration(x)
     bestFromRun.append(elitismFirstBest(x))
-    print('gen', i, "--- Cromosome :", "".join(str(j) for j in elitismFirstBest(x)),
-          "--- Fitness :", calculateFitness(elitismFirstBest(x)),
-          "--- x1,x2 :", decodeChromosome(elitismFirstBest(x)))
+    print('gen', i, "--- Cromosome :", "".join(str(j) for j in elitismFirstBest(x)),"--- Fitness :", calculateFitness(elitismFirstBest(x)),"--- x1,x2 :", decodeChromosome(elitismFirstBest(x)))
 
 print("============== Best From Run ==============")
 chosenOne = elitismFirstBest(bestFromRun)
 print("Cromosome    : ", "".join(str(i) for i in chosenOne))
 print("Fitness      : ", calculateFitness(chosenOne))
 print("X1,X2        : ", decodeChromosome(chosenOne))
+
+# +++++++++++++++ END OF MAIN PROGRAM +++++++++++++++
